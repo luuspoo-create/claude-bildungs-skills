@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --primary: #2d7a3a;
+    --light:   #e8f5e9;
+    --text:    #1a1a2e;
+    --muted:   #546e7a;
+    --border:  #cfd8dc;
+  }
+  @page {
+    size: A4;
+    margin: 18mm 20mm 22mm 20mm;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    color: var(--text);
+    background: white;
+  }
+  .doc-header {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 3px solid var(--primary);
+    margin-bottom: 6mm;
+    padding-bottom: 4mm;
+    gap: 0;
+  }
+  .doc-header-bar {
+    width: 6px;
+    background: var(--primary);
+    border-radius: 3px;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+  .doc-header-content { flex: 1; }
+  .doc-fach {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 1mm;
+  }
+  .doc-title {
+    font-size: 17pt;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 1mm;
+  }
+  .doc-subtitle {
+    font-size: 9.5pt;
+    color: var(--muted);
+  }
+  .doc-meta {
+    text-align: right;
+    font-size: 8.5pt;
+    color: var(--muted);
+    line-height: 1.7;
+    flex-shrink: 0;
+    align-self: flex-end;
+  }
+  .infobox {
+    background: var(--light);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 6px 6px 0;
+    padding: 4mm 5mm;
+    margin-bottom: 5mm;
+  }
+  .infobox-title {
+    font-size: 8.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary);
+    margin-bottom: 2mm;
+  }
+  .infobox p { font-size: 10pt; margin-bottom: 2mm; }
+  .infobox p:last-child { margin-bottom: 0; }
+  .aufgabe { margin-bottom: 7mm; page-break-inside: avoid; }
+  .aufgabe-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 2mm;
+  }
+  .aufgabe-nr {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 9pt;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .aufgabe-titel {
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+  .aufgabe-punkte {
+    font-size: 8pt;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--light);
+    padding: 1px 6px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .aufgabe-text {
+    margin-left: 30px;
+    margin-bottom: 2mm;
+    font-size: 10.5pt;
+  }
+  .teilaufgabe { margin-left: 30px; margin-bottom: 3mm; }
+  .teilaufgabe-label {
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1mm;
+  }
+  .loesungsfeld-lines { margin-left: 30px; margin-bottom: 3mm; }
+  .loesungsfeld-lines .line {
+    border-bottom: 1px solid var(--border);
+    height: 7mm;
+    margin-bottom: 1mm;
+  }
+  .loesungsfeld-grid {
+    margin-left: 30px;
+    margin-bottom: 3mm;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .loesungsfeld-grid table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+  }
+  .loesungsfeld-grid th {
+    background: var(--primary);
+    color: white;
+    padding: 2mm 3mm;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9pt;
+  }
+  .loesungsfeld-grid td {
+    border-bottom: 1px solid var(--border);
+    padding: 2mm 3mm;
+    height: 8mm;
+  }
+  .loesungsfeld-grid tr:last-child td { border-bottom: none; }
+  .loesungsfeld-grid tr:nth-child(even) td { background: #f8f9fa; }
+  .merkkasten {
+    background: #fffde7;
+    border: 2px solid #f9a825;
+    border-radius: 6px;
+    padding: 4mm 5mm;
+    margin-bottom: 5mm;
+  }
+  .merkkasten-title {
+    font-size: 8.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #e65100;
+    margin-bottom: 2mm;
+  }
+  .basis-label, .erweitert-label {
+    display: inline-block;
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-bottom: 2mm;
+    text-transform: uppercase;
+  }
+  .basis-label { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .erweitert-label { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+  .tipp {
+    background: #f3f3f3;
+    border-radius: 4px;
+    padding: 2mm 4mm;
+    font-size: 9pt;
+    color: var(--muted);
+    margin-left: 30px;
+    margin-bottom: 3mm;
+  }
+  .divider { border: none; border-top: 1.5px solid var(--border); margin: 5mm 0; }
+  .doc-footer {
+    margin-top: 8mm;
+    padding-top: 3mm;
+    border-top: 1px solid var(--border);
+    font-size: 8pt;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+  ul, ol { margin-left: 18px; margin-bottom: 2mm; }
+  li { margin-bottom: 1mm; }
+  p { margin-bottom: 2mm; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-header-bar"></div>
+  <div class="doc-header-content">
+    <div class="doc-fach">Biologie · 8. Klasse</div>
+    <div class="doc-title">Zellen und Organellen</div>
+    <div class="doc-subtitle">Arbeitsblatt · Grundlagen der Zellbiologie</div>
+  </div>
+  <div class="doc-meta">
+    Name: ________________________<br>
+    Datum: _______________________<br>
+    Punkte: _____ / 22
+  </div>
+</div>
+
+<div class="infobox">
+  <div class="infobox-title">📖 Theorie-Überblick</div>
+  <p>Alle Lebewesen bestehen aus <strong>Zellen</strong>. Man unterscheidet <strong>Prokaryoten</strong> (ohne Zellkern, z. B. Bakterien) und <strong>Eukaryoten</strong> (mit Zellkern, z. B. Pflanzen, Tiere, Pilze). Pflanzenzellen besitzen zusätzlich eine <strong>Zellwand</strong>, <strong>Chloroplasten</strong> und eine große <strong>Vakuole</strong>.</p>
+</div>
+
+<div class="aufgabe">
+  <div class="aufgabe-header">
+    <div class="aufgabe-nr">1</div>
+    <div class="aufgabe-titel">Wahr oder falsch?</div>
+    <div class="aufgabe-punkte">5 Punkte</div>
+  </div>
+  <div class="aufgabe-text">Kreuze an, ob die Aussagen wahr (W) oder falsch (F) sind. Korrigiere alle falschen Aussagen in der letzten Spalte.</div>
+  <div class="loesungsfeld-grid">
+    <table>
+      <tr>
+        <th style="width:55%">Aussage</th>
+        <th style="width:8%">W</th>
+        <th style="width:8%">F</th>
+        <th>Korrektur (falls falsch)</th>
+      </tr>
+      <tr><td>Alle Zellen besitzen einen Zellkern.</td><td></td><td></td><td></td></tr>
+      <tr><td>Mitochondrien produzieren Energie (ATP).</td><td></td><td></td><td></td></tr>
+      <tr><td>Chloroplasten kommen in Tierzellen vor.</td><td></td><td></td><td></td></tr>
+      <tr><td>Die Zellmembran ist für alle Zellen typisch.</td><td></td><td></td><td></td></tr>
+      <tr><td>Prokaryoten besitzen kein Erbgut.</td><td></td><td></td><td></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="aufgabe">
+  <div class="aufgabe-header">
+    <div class="aufgabe-nr">2</div>
+    <div class="aufgabe-titel">Organellen und ihre Funktionen</div>
+    <div class="aufgabe-punkte">8 Punkte</div>
+  </div>
+  <div class="aufgabe-text">Ordne jedem Organell die richtige Funktion zu. Schreibe den Buchstaben in die Tabelle.</div>
+
+  <div class="aufgabe-text">
+    <strong>Funktionen:</strong><br>
+    A – Fotosynthese betreiben &nbsp;|&nbsp; B – Proteinsynthese &nbsp;|&nbsp; C – Energiegewinnung (Zellatmung) &nbsp;|&nbsp;
+    D – Erbgut speichern &nbsp;|&nbsp; E – Stofftransport &nbsp;|&nbsp; F – Zelle nach aussen abgrenzen &nbsp;|&nbsp;
+    G – Wasserhaushalt regulieren &nbsp;|&nbsp; H – Zelle stabilisieren (nur Pflanzen)
+  </div>
+
+  <div class="loesungsfeld-grid">
+    <table>
+      <tr>
+        <th style="width:40%">Organell</th>
+        <th style="width:15%">Buchstabe</th>
+        <th>Kommt vor in …</th>
+      </tr>
+      <tr><td>Zellkern</td><td></td><td></td></tr>
+      <tr><td>Mitochondrium</td><td></td><td></td></tr>
+      <tr><td>Chloroplast</td><td></td><td></td></tr>
+      <tr><td>Ribosom</td><td></td><td></td></tr>
+      <tr><td>Vakuole</td><td></td><td></td></tr>
+      <tr><td>Zellmembran</td><td></td><td></td></tr>
+      <tr><td>Zellwand</td><td></td><td></td></tr>
+      <tr><td>Endoplasmatisches Retikulum</td><td></td><td></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="aufgabe">
+  <div class="aufgabe-header">
+    <div class="aufgabe-nr">3</div>
+    <div class="aufgabe-titel">Vergleich Tier- und Pflanzenzelle</div>
+    <div class="aufgabe-punkte">6 Punkte</div>
+  </div>
+
+  <div class="teilaufgabe">
+    <div class="teilaufgabe-label">a) <span class="basis-label">Basis</span> Nenne drei Strukturen, die nur in Pflanzenzellen vorkommen.</div>
+    <div class="loesungsfeld-lines">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+  </div>
+
+  <div class="teilaufgabe">
+    <div class="teilaufgabe-label">b) <span class="erweitert-label">Erweitert</span> Erkläre, warum Pflanzenzellen keine Mitochondrien benötigen würden, wenn die Fotosynthese ausreichen würde – und warum sie sie trotzdem besitzen.</div>
+    <div class="loesungsfeld-lines">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+    <div class="tipp">Tipp: Überlege, wann Pflanzen keine Fotosynthese betreiben können.</div>
+  </div>
+</div>
+
+<div class="aufgabe">
+  <div class="aufgabe-header">
+    <div class="aufgabe-nr">4</div>
+    <div class="aufgabe-titel">Kurzaufsatz</div>
+    <div class="aufgabe-punkte">3 Punkte</div>
+  </div>
+  <div class="aufgabe-text">Beschreibe in 3–4 Sätzen, was passieren würde, wenn eine Zelle keine Mitochondrien mehr hätte.</div>
+  <div class="loesungsfeld-lines">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+</div>
+
+<div class="merkkasten">
+  <div class="merkkasten-title">⭐ Merke – Zellvergleich</div>
+  <p><strong>Alle Eukaryoten:</strong> Zellkern · Mitochondrien · Ribosomen · Zellmembran</p>
+  <p><strong>Nur Pflanzenzellen:</strong> Zellwand · Chloroplasten · Zentrale Vakuole</p>
+  <p><strong>Prokaryoten (Bakterien):</strong> Kein Zellkern – Erbgut frei im Cytoplasma</p>
+</div>
+
+<div class="doc-footer">
+  <span>Sekundarstufe 1</span>
+  <span>Biologie 8. Klasse · Zellen und Organellen</span>
+</div>
+
+</body>
+</html>
