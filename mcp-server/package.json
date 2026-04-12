@@ -1,0 +1,26 @@
+{
+  "name": "claude-bildungs-skills-mcp",
+  "version": "1.0.0",
+  "description": "MCP Server für 87 Schweizer Bildungs-Skills (Lehrplan 21)",
+  "author": "Lucca Spohn",
+  "license": "CC-BY-SA-4.0",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/src/index.js",
+    "bundle-skills": "tsx scripts/bundle-skills.ts",
+    "prebuild": "npm run bundle-skills"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "gray-matter": "^4.0.3",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

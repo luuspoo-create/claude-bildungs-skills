@@ -1,0 +1,6 @@
+# MCP Server Build Artifacts
+node_modules/
+dist/
+
+# skills.json wird beim Build generiert, aber wir committen es
+# damit Vercel es direkt nutzen kann
