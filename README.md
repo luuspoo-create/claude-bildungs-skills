@@ -2,6 +2,7 @@
 
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 [![Skills](https://img.shields.io/badge/Skills-87-blue)](https://github.com/luuspoo-create/claude-bildungs-skills)
+[![MCP Server](https://img.shields.io/badge/MCP%20Server-live-brightgreen)](https://claude-bildungs-skills.vercel.app/mcp)
 [![Based on](https://img.shields.io/badge/Basiert%20auf-claude--education--skills-green)](https://github.com/GarethManning/claude-education-skills)
 
 Eine deutschsprachige Skill-Sammlung für [Claude](https://claude.ai) zur Unterstützung von Unterricht, Lernprozessen und Bildungsarbeit – zugeschnitten auf die **Sekundarstufe 1** im Schweizer Schulsystem (Lehrplan 21).
@@ -24,6 +25,28 @@ Dieses Repository enthält **87 Skills** für Claude (Claude Code / Claude Cowor
 Die Skills sind in Schweizer Hochdeutsch verfasst und referenzieren den Lehrplan 21, lassen sich aber auch im deutschen und österreichischen Schulsystem nutzen.
 
 ## Installation
+
+### MCP-Server (empfohlen — 1 Klick)
+
+Die einfachste Methode: Füge die MCP-Server-URL in Claude ein. Alle 70 pädagogischen Skills werden automatisch als Tools verfügbar — plus 4 Meta-Tools zum Suchen und Entdecken.
+
+**In Claude Desktop:**
+1. Öffne **Settings → MCP**
+2. Klicke **«Add Remote Server»**
+3. Füge diese URL ein:
+   ```
+   https://claude-bildungs-skills.vercel.app/mcp
+   ```
+4. Fertig. Alle Skills sind sofort verfügbar.
+
+**Was du bekommst:**
+- 70 Bildungs-Skills als aufrufbare Tools
+- `list_skills` — Alle Skills nach Domäne gruppiert anzeigen
+- `find_skills` — Suche nach Stichwort, Domäne oder Tag
+- `suggest_skills` — Beschreibe ein Problem, erhalte passende Skill-Vorschläge
+- `get_skill_details` — Vollständige Details zu einem einzelnen Skill
+
+> Der MCP-Server enthält nur die pädagogischen Skills (schule-\*). System-, Dokument- und Content-Skills sind bewusst ausgeschlossen, da sie für den persönlichen Workflow gedacht sind.
 
 ### In Claude Code (Terminal)
 
@@ -264,7 +287,7 @@ Dieses Repository ist eine **Übersetzung und Adaption**, kein Fork im technisch
 | Schulsystem | International (v.a. UK/IB) | Schweiz (Lehrplan 21), DACH |
 | Zielstufe | K–12 / Universität | Sekundarstufe 1 (7.–9. Klasse) |
 | Anzahl Skills | 108 pädagogische Skills | 68 übersetzte + 21 eigene Skills |
-| MCP-Server | Ja (live) | Nein (geplant) |
+| MCP-Server | Ja (live) | Ja (live) — [claude-bildungs-skills.vercel.app/mcp](https://claude-bildungs-skills.vercel.app/mcp) |
 | Zusätzlich | Architektur, Registry, Orchestrator | Dokument-Tools, Content-Skills, System-Skills |
 
 Für das englischsprachige Original mit MCP-Server und programmatischer API: [github.com/GarethManning/claude-education-skills](https://github.com/GarethManning/claude-education-skills)
